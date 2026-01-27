@@ -1,0 +1,136 @@
+:root {
+    --main-bg-color: #009d63;
+    --main-text-color: #009d63;
+    --second-text-color: #bbbec5;
+    --second-bg-color: #c1efde;
+}
+
+.primary-text {
+    color: var(--main-text-color);
+}
+
+.second-text {
+    color: var(--second-text-color);
+}
+
+.primary-bg {
+    background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+    background-color: var(--second-bg-color);
+}
+
+.rounded-full {
+    border-radius: 100%;
+}
+
+#wrapper {
+    overflow-x: hidden;
+    background-image: linear-gradient(to right,
+            #baf3d7,
+            #c2f5de,
+            #cbf7e4,
+            #d4f8ea,
+            #ddfaef);
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+    margin-left: -15rem;
+    -webkit-transition: margin 0.25s ease-out;
+    -moz-transition: margin 0.25s ease-out;
+    -o-transition: margin 0.25s ease-out;
+    transition: margin 0.25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+    width: 15rem;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+#menu-toggle {
+    cursor: pointer;
+}
+
+.list-group-item {
+    border: none;
+    padding: 18px 30px;
+    margin: 2px 0;
+    /* Separation between items */
+    opacity: 100;
+    /* Subtle transparency for depth */
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+    /* Prepare for hover accent */
+}
+
+.list-group-item:hover {
+    opacity: 1;
+    background-color: rgba(0, 157, 99, 0.05);
+    /* Very faint brand color tint */
+}
+
+.list-group-item.active {
+    background-color: transparent;
+    color: var(--main-text-color);
+    font-weight: bold;
+    border: none;
+    opacity: 1;
+    /* Fully visible */
+    border-left: 3px solid var(--main-text-color);
+    /* Subtle indicator */
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -15rem;
+    }
+}
+
+/* Visual Layers & Detail Styling */
+#sidebar-wrapper {
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    position: relative;
+    background-color: white;
+    /* Ensure it stands out against the gradient wrapper */
+}
+
+/* Header/Title Layer */
+.navbar {
+    background: white !important;
+    /* Make sure it's solid */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow for depth */
+    position: relative;
+    z-index: 900;
+}
+
+/* Main Content Layer */
+.container-fluid {
+    position: relative;
+    z-index: 1;
+    /* Below header and sidebar */
+}

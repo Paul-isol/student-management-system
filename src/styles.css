@@ -1,0 +1,339 @@
+/* ===== CSS Reset & Base Styles ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Primary Colors - Light Theme */
+    --primary-gradient: #a4ced2;
+    --accent-color: #0d6efd;
+    /* Bootstrap Primary Blue for consistency */
+    --accent-hover: #0b5ed7;
+
+    /* Text Colors */
+    --text-dark: #2c3e50;
+    --text-muted: #6c757d;
+    --text-nav: #495057;
+
+    /* Shadows - Soft & Elegant */
+    --shadow-nav: 0 2px 15px rgba(0, 0, 0, 0.04);
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    /* Very light gray background for contrast with white nav */
+    color: var(--text-dark);
+
+}
+
+/* ===== Navbar Styles ===== */
+.navbar {
+    background: var(--primary-gradient);
+    box-shadow: var(--shadow-nav);
+    padding: 1rem 0;
+    /* Slightly taller for elegance */
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* Brand Styling */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-dark) !important;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.brand-text {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0d6efd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Navigation Links */
+.navbar-nav .nav-link {
+    color: var(--text-nav) !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1.2rem;
+    margin: 0 0.2rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--accent-color) !important;
+}
+
+/* Elegant Underline Effect */
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 1.2rem;
+    right: 1.2rem;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform-origin: center;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+/* Primary Button Styling (Login) */
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(13, 110, 253, 0.15);
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+    border-color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(13, 110, 253, 0.2);
+}
+
+/* Mobile Toggle Button */
+.navbar-toggler {
+    border: none;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        padding: 1rem 0;
+        background: #ffffff;
+    }
+
+    .navbar-nav .nav-link::after {
+        display: none;
+    }
+
+    .btn-primary {
+        margin-top: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(164, 206, 210, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content h1 {
+    color: var(--text-dark);
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.hero-img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 370px !important;
+}
+
+.hero-img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Feature Sections */
+.feature-section {
+    background-color: #fff;
+    border-top: 1px solid rgba(0, 0, 0, 0.03);
+    background-image: url(./images/background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.feature-img {
+    transition: all 0.3s ease;
+}
+
+.img-wrapper {
+    position: relative;
+    padding: 10px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow-card);
+}
+
+.img-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--primary-gradient) 0%, transparent 100%);
+    z-index: -1;
+    transform: translate(-10px, 10px);
+    opacity: 0.5;
+}
+
+.feature-section h2 {
+    color: var(--text-dark);
+    letter-spacing: -0.5px;
+}
+
+/* Teachers Section */
+.bg-light-alt {
+    background-color: #fcfdfe;
+}
+
+.section-divider {
+    width: 60px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 2px;
+    margin-top: 1rem;
+}
+
+.teacher-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.teacher-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+.teacher-img-container {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    padding: 5px;
+    /* Border gap */
+    background: #fff;
+    /* Inner border color */
+    border-radius: 50%;
+    border: 2px solid rgba(13, 110, 253, 0.1);
+    /* Outer ring lightness */
+    transition: all 0.3s ease;
+}
+
+.teacher-card:hover .teacher-img-container {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+}
+
+.teacher-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Courses Section */
+.course-card {
+    transition: all 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.course-img-wrapper {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.course-img-wrapper img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.course-card:hover .course-img-wrapper img {
+    transform: scale(1.1);
+}
+
+.course-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 110, 253, 0.85);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.course-card:hover .course-overlay {
+    opacity: 1;
+}
+
+.btn-outline-primary {
+    border-width: 2px;
+    font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
+}
+
+/* Admission Form Styles (Flat Design) */
+.admission-card {
+    /* No shadow as requested */
+    box-shadow: none !important;
+    transition: none;
+    /* remove potential transition inheritance */
+}
+
+/* Form Controls Customization */
+.form-control {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* Lighter border default */
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    /* Remove Bootstrap default glow */
+    border-color: var(--accent-color);
+}
+
+.form-floating>label {
+    padding-left: 1rem;
+    color: var(--text-muted);
+}
+
+/* Login Page Styles */
+.login-card {
+    /* Identical to admission-card for consistency */
+    box-shadow: none !important;
+    transition: none;
+}
+
+#login-section {
+    background: url('./images/background.jpg') no-repeat center center / cover !important;
+}
