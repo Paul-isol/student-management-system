@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 } elseif ($_SESSION['usertype'] != "admin") {
-    header("Location: studenthome.php");
+    header("Location: ../studenthome.php");
     exit();
 }
 
@@ -52,41 +52,52 @@ $result = $conn->query($sql);
                 </div>
             </nav>
             <!-- content -->
-             <div class="container p-4">
+            <div class="container p-4">
                 <h1>Applied Students</h1>
 
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="table-primary">
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Address</th>
-                            <th scope="col" class="table-danger text-center">Remove</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row["username"] . "</td>";
-                                echo "<td>" . $row["email"] . "</td>";
-                                echo "<td>" . $row["phone"] . "</td>";
-                                echo "<td>" . $row["password"] . "</td>";
-                                echo "<td class='table-danger text-center'><a href='delete.php?id=" . $row["id"] . "'>Remove</a></td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr>";
-                            echo "<td colspan='4'>No applications found</td>";
-                            echo "</tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                <div class="card shadow-sm border-0 rounded-4 my-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th scope="col" class="ps-4 py-3 text-secondary text-uppercase small fw-bold">Name
+                                    </th>
+                                    <th scope="col" class="py-3 text-secondary text-uppercase small fw-bold">Email</th>
+                                    <th scope="col" class="py-3 text-secondary text-uppercase small fw-bold">Phone</th>
+                                    <th scope="col" class="py-3 text-secondary text-uppercase small fw-bold">Password
+                                    </th>
+                                    <th scope="col"
+                                        class="py-3 text-center text-secondary text-uppercase small fw-bold">Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="border-top-0">
+                                <?php
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td class='ps-4 fw-medium text-dark'>" . htmlspecialchars($row["username"]) . "</td>";
+                                        echo "<td class='text-secondary'>" . htmlspecialchars($row["email"]) . "</td>";
+                                        echo "<td class='text-secondary'>" . htmlspecialchars($row["phone"]) . "</td>";
+                                        echo "<td class='text-secondary font-monospace'>" . htmlspecialchars($row["password"]) . "</td>";
+                                        echo "<td class='text-center'>";
+                                        echo "<a href='updatestudent.php?id=" . $row["id"] . "' class='btn btn-sm btn-outline-primary me-2 rounded-pill px-3'><i class='fas fa-edit me-1'></i> Update</a>";
+                                        echo "<a href='delete.php?id=" . $row["id"] . "' class='btn btn-sm btn-outline-danger rounded-pill px-3' onclick='return confirm(\"Are you sure you want to delete this student?\");'><i class='fas fa-trash-alt me-1'></i> Remove</a>";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr>";
+                                    echo "<td colspan='5' class='text-center py-5 text-muted'>No students found</td>";
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            
+
         </div>
     </div>
 

@@ -1,10 +1,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit();
 } elseif ($_SESSION['usertype'] != "admin") {
-    header("Location: studenthome.php");
+    header("Location: ../studenthome.php");
     exit();
 }
 
@@ -55,32 +55,34 @@ $result = $conn->query($sql);
             <div class="container p-4">
                 <h1>Applied Students</h1>
 
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="table-primary">
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
-                            <th scope="col">Address</th>
-                        </tr>
-                    </thead>
+                <table class="table table-hover table-bordered my-4">
+                    <thead class="bg-light">
+                                <tr>
+                                    <th scope="col" class="ps-4 py-3 text-secondary text-uppercase small fw-bold">Name
+                                    </th>
+                                    <th scope="col" class="py-3 text-secondary text-uppercase small fw-bold">Email</th>
+                                    <th scope="col" class="py-3 text-secondary text-uppercase small fw-bold">Phone</th>
+                                    <th scope="col" class="py-3 text-secondary text-uppercase small fw-bold">Message
+                                    </th>
+                                </tr>
+                            </thead>
                     <tbody>
                         <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row["name"] . "</td>";
-                                echo "<td>" . $row["email"] . "</td>";
-                                echo "<td>" . $row["phone"] . "</td>";
-                                echo "<td>" . $row["message"] . "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr>";
-                            echo "<td colspan='4'>No applications found</td>";
-                            echo "</tr>";
-                        }
-                        ?>
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td class='ps-4 fw-medium text-dark'>" . $row["name"] . "</td>";
+                                        echo "<td class='text-secondary'>" . $row["email"] . "</td>";
+                                        echo "<td class='text-secondary'>" . $row["phone"] . "</td>";
+                                        echo "<td class='text-secondary font-monospace'>" . $row["message"] . "</td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr>";
+                                    echo "<td colspan='5' class='text-center py-5 text-muted'>No students found</td>";
+                                    echo "</tr>";
+                                }
+                                ?>
                     </tbody>
                 </table>
             </div>

@@ -1,3 +1,42 @@
+<?php
+session_start();
+$host = getenv('DB_HOST');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$dbname = getenv('DB_DATABASE');
+
+$conn = new mysqli($host, $user, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $description = $_POST['description'];
+    $image = $_FILES['image']['name'];
+    $dst = "../images/" . $image;
+    $dst_db = "images/" . $image;
+
+    // Check if image was uploaded
+    if (!empty($image)) {
+        move_uploaded_file($_FILES['image']['tmp_name'], $dst);
+    }
+
+    $sql = "INSERT INTO teacher (name, email, description, image) VALUES ('$name', '$email', '$description', '$dst_db')";
+    $result = $conn->query($sql);
+    if ($result) {
+        $_SESSION['teacher_added'] = "Teacher added successfully";
+    } else {
+        $_SESSION['teacher_added'] = "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +65,69 @@
                 </div>
             </nav>
             <!-- content -->
-            
+            <div id="page-content-wrapper">
+
+                <!-- content -->
+                <section class="admission-section py-5 bg-light-alt">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="admission-card p-4 p-md-5 bg-white rounded-4 border">
+                                    <div class="text-center mb-5">
+                                        <h2 class="fw-bold display-6">Add Teacher details </h2>
+                                        <div class="section-divider mx-auto"></div>
+                                    </div>
+                                    <?php
+                                    if (isset($_SESSION["teacher_added"])) {
+                                        $alertClass = ($_SESSION['teacher_added'] == 'Teacher added successfully') ? 'alert-success' : 'alert-danger';
+                                        echo "<div class='alert $alertClass'>" . $_SESSION["teacher_added"] . "</div>";
+                                        unset($_SESSION["teacher_added"]);
+                                    }
+                                    ?>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="name"
+                                                        placeholder="Your Name" name="name">
+                                                    <label for="name">Full Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="email" class="form-control" id="email"
+                                                        placeholder="name@example.com" name="email">
+                                                    <label for="email">Email Address</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="description"
+                                                        placeholder="Description" name="description">
+                                                    <label for="description">Description</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="input-group mb-3">
+                                                    <label class="input-group-text">Upload
+                                                        image</label>
+                                                    <input type="file" class="form-control" name="image">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-center mt-4">
+                                                <button type="submit" name="submit"
+                                                    class="btn btn-primary btn-lg rounded-pill px-5 w-100 w-md-auto">Submit
+                                                    Application</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
     </div>
 

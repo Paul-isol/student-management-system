@@ -1,3 +1,29 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit();
+} elseif ($_SESSION['usertype'] != "admin") {
+    header("Location: ../studenthome.php");
+    exit();
+}
+
+$host = getenv('DB_HOST');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$database = getenv('DB_DATABASE');
+
+$conn = new mysqli($host, $user, $password, $database);
+
+if ($conn->connect_error) {
+    die("Failed to connect to the database: " . $conn->connect_error);
+}
+$sql = "SELECT * FROM teacher";
+$result = $conn->query($sql);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,10 +48,31 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                    <h2 class="fs-2 m-0">Admissions</h2>
+                    <h2 class="fs-2 m-0">Teachers Details</h2>
                 </div>
             </nav>
             <!-- content -->
+            <div class="container-fluid p-4">
+                <div class="row g-4">
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card h-100 shadow-sm border-0 text-center p-3">
+                            <div class="d-flex justify-content-center">
+                                <img src="../images/teacher1.png" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Teacher Profile">
+                            </div>
+                            <div class="card-body p-0">
+                                <h5 class="card-title fw-bold"><?php echo htmlspecialchars($row['name']); ?></h5>
+                                <p class="card-text text-muted mb-3"><?php echo htmlspecialchars($row['description']); ?></p>
+                                <div class="d-flex align-items-center justify-content-center text-primary">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    <span class="small"><?php echo htmlspecialchars($row['email']); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endwhile; ?>
+                </div>
+            </div>
             
         </div>
     </div>
