@@ -1,3 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit();
+} elseif ($_SESSION['usertype'] != "admin") {
+    header("Location: ../studenthome.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

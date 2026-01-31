@@ -1,3 +1,42 @@
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit();
+} elseif ($_SESSION['usertype'] != "admin") {
+    header("Location: ../studenthome.php");
+    exit();
+}
+$user = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$host = getenv('DB_HOST');
+$db = getenv('DB_DATABASE');
+
+$conn = new mysqli($host, $user, $password, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+if (isset($_POST['submit'])) {
+    $name = $_POST['name'];
+    $code = $_POST['code'];
+    $description = $_POST['description'];
+    $image = $_FILES['image']['name'];
+    $dest = '../images/' . $name;
+    if (!empty($image)) {
+        move_uploaded_file($_FILES['image']['name'], $dest);
+    }
+    $sql = "INSERT INTO course (name, code, description, image) VALUES ('$name', '$code', '$description', '$dest')";
+    $result = $conn->query($sql);
+    if($result){
+        $_SESSION['course_added'] = 'Course added successfully';
+    }else{
+        $_SESSION['course_added'] = 'Failed to add course';
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,8 +53,8 @@
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Admin Sidebar -->
-        <?php 
-        include 'admin_sidebar.php'; 
+        <?php
+        include 'admin_sidebar.php';
         ?>
         <!-- /#sidebar-wrapper -->
 
@@ -28,7 +67,68 @@
                 </div>
             </nav>
             <!-- content -->
-            
+            <div id="page-content-wrapper">
+
+                <!-- content -->
+                <section class="admission-section py-5 bg-light-alt">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="admission-card p-4 p-md-5 bg-white rounded-4 border">
+                                    <div class="text-center mb-5">
+                                        <h2 class="fw-bold display-6">Add Course details </h2>
+                                        <div class="section-divider mx-auto"></div>
+                                    </div>
+                                    <?php
+                                    if (isset($_SESSION["course_added"])) {
+                                        $alertClass = ($_SESSION['course_added'] == 'Course added successfully') ? 'alert-success' : 'alert-danger';
+                                        echo "<div class='alert $alertClass'>" . $_SESSION["course_added"] . "</div>";
+                                        unset($_SESSION["course_added"]);
+                                    }
+                                    ?>
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="name"
+                                                        placeholder="Your Name" name="name">
+                                                    <label for="name">Course Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="code" name="code">
+                                                    <label for="code">Course Code</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="description"
+                                                        placeholder="Description" name="description">
+                                                    <label for="description">Description</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="input-group mb-3">
+                                                    <label class="input-group-text">Upload
+                                                        image</label>
+                                                    <input type="file" class="form-control" name="image">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 text-center mt-4">
+                                                <button type="submit" name="submit"
+                                                    class="btn btn-primary btn-lg rounded-pill px-5 w-100 w-md-auto">Submit
+                                                    Application</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
         </div>
     </div>
 

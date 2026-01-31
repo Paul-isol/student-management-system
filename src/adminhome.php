@@ -7,6 +7,27 @@ if (!isset($_SESSION['username'])) {
     header("Location: studenthome.php");
     exit();
 }
+
+$host = getenv('DB_HOST');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+$dbname = getenv('DB_DATABASE');
+
+$conn = new mysqli($host, $user, $password, $dbname);
+if($conn->connect_error){
+    die('Connection failed: '. $conn->connect_error);
+}
+// total student count
+$student_count_query = "SELECT COUNT(*) AS total_students FROM user WHERE usertype='student'";
+$students_count =  $conn->query($student_count_query);
+
+$teacher_count_query = "SELECT COUNT(*) AS total_teachers FROM teacher";
+$teachers_count = $conn->query($teacher_count_query);
+
+$course_count_query = "SELECT COUNT(*) AS total_courses FROM course";
+$courses_count = $conn->query($course_count_query);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +96,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="col-md-3">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">720</h3>
+                                <h3 class="fs-2"><?php echo $students_count->fetch_assoc()['total_students']; ?></h3>
                                 <p class="fs-5">Students</p>
                             </div>
                             <i class="fas fa-user-graduate fs-1 primary-text border rounded-full secondary-bg p-3"></i>
@@ -85,7 +106,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="col-md-3">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">492</h3>
+                                <h3 class="fs-2"><?php echo $teachers_count->fetch_assoc()['total_teachers']?></h3>
                                 <p class="fs-5">Teachers</p>
                             </div>
                             <i
@@ -96,7 +117,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="col-md-3">
                         <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                             <div>
-                                <h3 class="fs-2">3899</h3>
+                                <h3 class="fs-2"><?php echo $courses_count->fetch_assoc()['total_courses']?></h3>
                                 <p class="fs-5">Courses</p>
                             </div>
                             <i class="fas fa-book fs-1 primary-text border rounded-full secondary-bg p-3"></i>

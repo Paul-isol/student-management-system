@@ -1,5 +1,12 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login.php");
+    exit();
+} elseif ($_SESSION['usertype'] != "admin") {
+    header("Location: ../studenthome.php");
+    exit();
+}
 $host = getenv('DB_HOST');
 $user = getenv('DB_USER');
 $password = getenv('DB_PASSWORD');

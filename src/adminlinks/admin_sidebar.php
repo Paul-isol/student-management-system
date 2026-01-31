@@ -36,7 +36,7 @@
             class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?php echo ($currentPage == 'addcourses.php') ? 'active' : ''; ?>">
             <i class="fas fa-plus-circle me-2"></i>Add Courses
         </a>
-        <a href="logout.php" class="list-group-item list-group-item-action bg-transparent text-danger">
+        <a href="../logout.php" class="list-group-item list-group-item-action bg-transparent text-danger">
             <i class="fas fa-power-off me-2"></i>Logout
         </a>
     </div>

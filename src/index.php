@@ -43,13 +43,13 @@
                         <a class="nav-link active" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About Us</a>
+                        <a class="nav-link" href="#feature">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Admission</a>
+                        <a class="nav-link" href="#admission">Admission</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="#admission">Contact</a>
                     </li>
                     <li class="nav-item ms-lg-3">
                         <a class="btn btn-primary" href="login.php">Login</a>
@@ -77,7 +77,7 @@
     </section>
 
     <!-- Feature Section: Playground -->
-    <section class="feature-section py-5">
+    <section class="feature-section py-5" id="feature">
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-md-5">
@@ -241,7 +241,7 @@
     </section>
 
     <!-- Admission Form Section -->
-    <section class="admission-section py-5 bg-light-alt">
+    <section class="admission-section py-5 bg-light-alt" id="admission">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">

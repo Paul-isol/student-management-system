@@ -58,7 +58,7 @@ $result = $conn->query($sql);
                     <div class="col-md-4 col-lg-3">
                         <div class="card h-100 shadow-sm border-0 text-center p-3">
                             <div class="d-flex justify-content-center">
-                                <img src="../images/teacher1.png" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Teacher Profile">
+                                <img src=<?php echo '/'.$row['image'] ?> class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Teacher Profile">
                             </div>
                             <div class="card-body p-0">
                                 <h5 class="card-title fw-bold"><?php echo htmlspecialchars($row['name']); ?></h5>

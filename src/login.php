@@ -3,6 +3,10 @@ error_reporting(0);
 session_start();
 $message = $_SESSION['loginmessage'] ?? '';
 unset($_SESSION['loginmessage']);
+if(isset($_SESSION['username'])){
+    header("Location: adminhome.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
